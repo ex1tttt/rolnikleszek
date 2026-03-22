@@ -13,7 +13,7 @@ import StepFive from './StepFive'
 
 const orderSchema = z.object({
   slot_id: z.string().min(1, 'Wybierz termin dostawy'),
-  eggs_quantity: z.number().min(1, 'Minimalna ilość to 1 jajko').max(1000, 'Maksymalna ilość to 1000 jajek'),
+  eggs_quantity: z.number().min(1, 'Minimalna ilość to 1 jajko').max(999999, 'Ilość jest za duża'),
   customer_name: z
     .string()
     .min(3, 'Imię i nazwisko musi mieć co najmniej 3 znaki'),

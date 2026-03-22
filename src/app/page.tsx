@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import OrderForm from '@/components/forms/OrderForm'
-import HeroButton from '@/components/HeroButton'
 
 export default async function Home() {
   const supabase = await createServerSupabaseClient()
@@ -38,7 +37,7 @@ export default async function Home() {
       </header>
 
       {/* Hero Section - Full Width */}
-      <section className="bg-gradient-to-br from-[#2d5016] via-[#3d6b1f] to-[#2d5016] text-white py-24 relative overflow-hidden">
+      <section className="bg-linear-to-br from-[#2d5016] via-[#3d6b1f] to-[#2d5016] text-white py-24 relative overflow-hidden">
         <div className="absolute top-0 right-0 opacity-10 text-9xl">🥚</div>
         <div className="absolute bottom-0 left-0 opacity-10 text-9xl">🍯</div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -49,7 +48,12 @@ export default async function Home() {
             <p className="text-xl md:text-2xl text-[#d4e5c4] mb-8 leading-relaxed">
               Prosto z naszego ekologicznego gospodarstwa. Jajka od szczęśliwych kur, naturalny miód i pełna przejrzystość. Bez chemii, bez pośredników.
             </p>
-            <HeroButton />
+            <a
+              href="#order-section"
+              className="inline-block bg-[#8b6f47] hover:bg-[#a68358] text-white font-bold py-4 px-8 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg"
+            >
+              Złóż zamówienie teraz
+            </a>
           </div>
         </div>
       </section>
@@ -131,7 +135,7 @@ export default async function Home() {
                   { icon: '💚', text: 'Ekologicznie – myślimy o przyszłości' },
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-4 items-start p-4 bg-[#faf8f3] rounded-xl hover:bg-[#f5f3ef] transition-colors">
-                    <span className="text-3xl flex-shrink-0">{item.icon}</span>
+                    <span className="text-3xl shrink-0">{item.icon}</span>
                     <span className="text-[#2c2c2c] font-semibold">{item.text}</span>
                   </div>
                 ))}

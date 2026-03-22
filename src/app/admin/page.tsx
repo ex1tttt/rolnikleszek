@@ -41,7 +41,7 @@ export default function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#d4e5c4] to-[#eae4dd] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-[#d4e5c4] to-[#eae4dd] flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full border-2 border-[#d4c4b8]">
           <h1 className="text-3xl font-bold text-[#2d5016] mb-2 text-center">🔒 Panel Admin</h1>
           <p className="text-[#8b6f47] text-center text-sm mb-8 font-medium">Rolnik Leszek - Zarządzanie zamówieniami</p>

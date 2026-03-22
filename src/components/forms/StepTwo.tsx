@@ -9,13 +9,32 @@ interface StepTwoProps {
 }
 
 export default function StepTwo({ selectedSlot }: StepTwoProps) {
-  const { register, formState: { errors }, watch } = useFormContext()
+  const { register, formState: { errors }, watch, setValue } = useFormContext()
   const eggQuantity = watch('eggs_quantity')
 
   const available = calculateAvailableEggs(
     selectedSlot.egg_limit,
     selectedSlot.eggs_reserved
   )
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value) || 0
+    
+    // Если значение больше максимума - сбиваем на максимум
+    if (value > available) {
+      value = available
+      e.target.value = String(available)
+    }
+    
+    // Если меньше 1 - сбиваем на 1
+    if (value < 1 && value > 0) {
+      value = 1
+      e.target.value = '1'
+    }
+    
+    // Синхронизируем с react-hook-form
+    setValue('eggs_quantity', value, { shouldValidate: true })
+  }
 
   return (
     <div className="space-y-6">
@@ -66,9 +85,11 @@ export default function StepTwo({ selectedSlot }: StepTwoProps) {
               if (!value) return 'Wybierz ilość'
               if (value < 1) return 'Minimalna ilość to 1 jajko'
               if (value > available) return `Maksimum ${available} jajek dla tego terminu`
+              if (value <= 0) return 'Ilość musi być większa niż 0'
               return true
             }
           })}
+          onChange={handleInputChange}
           className="w-full px-4 py-3 border-2 border-[#d4c4b8] rounded-lg focus:ring-2 focus:ring-[#2d5016] focus:border-[#2d5016] focus:outline-none transition text-[#2c2c2c]"
         />
         {errors.eggs_quantity && typeof errors.eggs_quantity === 'object' && (

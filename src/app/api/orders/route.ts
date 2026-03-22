@@ -38,6 +38,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate eggs_quantity is a positive number
+    if (typeof eggs_quantity !== 'number' || eggs_quantity <= 0 || !Number.isInteger(eggs_quantity)) {
+      return NextResponse.json(
+        { error: 'Invalid eggs quantity - must be a positive integer' },
+        { status: 400 }
+      )
+    }
+
+    // Validate eggs_quantity is not too large
+    if (eggs_quantity > 10000) {
+      return NextResponse.json(
+        { error: 'Eggs quantity is too large' },
+        { status: 400 }
+      )
+    }
+
     // Get delivery slot
     const { data: slot, error: slotError } = await supabase
       .from('delivery_slots')

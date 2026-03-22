@@ -175,7 +175,7 @@ export default async function Home() {
                 </div>
                 <div className="border-t border-[#d4c4b8] pt-6">
                   <p className="text-5xl font-bold text-[#2d5016] mb-2">✉️</p>
-                  <p className="text-xl text-[#8b6f47] font-semibold">rolnikleszek@gmail.com</p>
+                  <p className="text-xl text-[#8b6f47] font-semibold">tkachmaksim2007@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default async function Home() {
             <div className="text-center border-l border-r border-[#4a7c2e] md:border-[#4a7c2e] border-t md:border-t-0 border-b md:border-b-0 py-8 md:py-0">
               <p className="text-5xl mb-4">✉️</p>
               <p className="text-[#d4e5c4] text-sm font-semibold mb-2">EMAIL</p>
-              <a href="mailto:rolnikleszek@gmail.com" className="text-2xl font-bold hover:text-[#d4e5c4] transition-colors break-all">rolnikleszek@gmail.com</a>
+              <a href="mailto:tkachmaksim2007@gmail.com" className="text-2xl font-bold hover:text-[#d4e5c4] transition-colors break-all">tkachmaksim2007@gmail.com</a>
             </div>
             <div className="text-center">
               <p className="text-5xl mb-4">📍</p>

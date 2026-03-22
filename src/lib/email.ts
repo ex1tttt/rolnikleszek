@@ -55,7 +55,7 @@ export const sendOrderConfirmationEmail = async (
             <p>Wkrótce skontaktujemy się z Tobą w celu potwierdzenia dostawy.</p>
             
             <p>
-              W razie pytań, napisz do nas na <strong>rolnikleszek@gmail.com</strong> 
+              W razie pytań, napisz do nas na <strong>tkachmaksim2007@gmail.com</strong> 
               lub zadzwoń <strong>607 80 80 89</strong>
             </p>
           </div>

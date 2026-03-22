@@ -23,7 +23,7 @@ export default function StepFive() {
           </p>
           <p className="flex items-center gap-3">
             <span className="text-lg">✉️</span>
-            <span>Email: <span className="font-bold text-[#2d5016]">rolnikleszek@gmail.com</span></span>
+            <span>Email: <span className="font-bold text-[#2d5016]">tkachmaksim2007@gmail.com</span></span>
           </p>
           <p className="flex items-center gap-3">
             <span className="text-lg">📍</span>

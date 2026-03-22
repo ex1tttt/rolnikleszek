@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8f3;
+  --foreground: #2c2c2c;
+  --primary: #2d5016;
+  --primary-light: #4a7c2e;
+  --primary-lighter: #d4e5c4;
+  --secondary: #8b6f47;
+  --secondary-light: #d4c4b8;
+  --success: #2d5016;
+  --error: #c62e1e;
+  --warning: #a67c3a;
+  --surface: #ffffff;
+  --surface-variant: #eae4dd;
+  --border: #d4c4b8;
+  --shadow: rgba(45, 80, 22, 0.1);
 }
 
 @theme inline {
@@ -14,13 +26,40 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1815;
+    --foreground: #f5f1ed;
+    --primary: #a8d68e;
+    --surface: #2c2620;
+    --surface-variant: #3d3630;
+    --border: #4d4540;
+    --shadow: rgba(0, 0, 0, 0.3);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Material Design - Smooth transitions */
+* {
+  transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1),
+              color 200ms cubic-bezier(0.2, 0, 0, 1),
+              border-color 200ms cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 200ms cubic-bezier(0.2, 0, 0, 1),
+              transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Material Design - Shadows */
+.shadow-md-1 {
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.shadow-md-2 {
+  box-shadow: 0 3px 6px var(--shadow);
+}
+
+.shadow-md-3 {
+  box-shadow: 0 10px 20px var(--shadow);
 }

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { getRecaptchaToken } from '@/lib/recaptcha'
 import { DeliverySlot, OrderFormData } from '@/types'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -25,7 +24,7 @@ const orderSchema = z.object({
   rodo_accepted: z.boolean().refine((val) => val === true, {
     message: 'Musisz zaakceptować warunki RODO',
   }),
-  recaptchaToken: z.string().optional(),
+  website: z.string().optional(), // Honeypot field
 })
 
 type OrderFormSchema = z.infer<typeof orderSchema>
@@ -86,14 +85,10 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
     setSubmitError(null)
 
     try {
-      // Get reCAPTCHA token
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-      const recaptchaToken = siteKey ? await getRecaptchaToken(siteKey) : ''
-
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, recaptchaToken }),
+        body: JSON.stringify(data),
       })
 
       if (!response.ok) {
@@ -116,6 +111,15 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
     <div className="w-full">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
+          {/* Honeypot field - hidden from users */}
+          <input
+            type="text"
+            {...methods.register('website')}
+            style={{ display: 'none' }}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+
           {/* Progress bar */}
           <div className="flex gap-2 mb-8">
             {[1, 2, 3, 4].map((step) => (

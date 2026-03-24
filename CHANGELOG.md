@@ -149,7 +149,7 @@ NEXT_PUBLIC_ADMIN_PASSWORD=admin123
 ✅ Blokada po limicie  
 ✅ Komunikaty użytkownika (dostępną pula, deadline, mała dostępność)  
 ✅ Podstawowa ochrona panelu admin  
-✅ reCAPTCHA v3 na formularzu (zabezpieczenie antyspamowe)
+✅ Honeypot na formularzu (zabezpieczenie antyspamowe)
 
 ## Co ainda pozostaje do zrobienia?
 

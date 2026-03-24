@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { getRecaptchaToken } from '@/lib/recaptcha'
 import { DeliverySlot, OrderFormData } from '@/types'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -86,16 +87,8 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
 
     try {
       // Get reCAPTCHA token
-      let recaptchaToken = ''
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-      
-      if (siteKey && (window as any).grecaptcha) {
-        try {
-          recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: 'submit_order' })
-        } catch (error) {
-          console.warn('reCAPTCHA execution failed:', error)
-        }
-      }
+      const recaptchaToken = siteKey ? await getRecaptchaToken(siteKey) : ''
 
       const response = await fetch('/api/orders', {
         method: 'POST',

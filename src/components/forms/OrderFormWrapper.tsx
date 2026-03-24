@@ -11,8 +11,13 @@ interface OrderFormWrapperProps {
 export default function OrderFormWrapper({ deliverySlots }: OrderFormWrapperProps) {
   const reCaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
+  if (!reCaptchaKey) {
+    console.warn('reCAPTCHA site key not configured')
+    return <OrderForm deliverySlots={deliverySlots} />
+  }
+
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={reCaptchaKey || ''}>
+    <GoogleReCaptchaProvider reCaptchaKey={reCaptchaKey}>
       <OrderForm deliverySlots={deliverySlots} />
     </GoogleReCaptchaProvider>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -38,19 +38,6 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-
-  // Load reCAPTCHA script dynamically
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js'
-    script.async = true
-    script.defer = true
-    document.head.appendChild(script)
-
-    return () => {
-      document.head.removeChild(script)
-    }
-  }, [])
 
   const methods = useForm<OrderFormSchema>({
     resolver: zodResolver(orderSchema),

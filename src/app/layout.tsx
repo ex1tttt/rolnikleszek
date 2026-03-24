@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ReCaptchaProviderWrapper } from '@/components/ReCaptchaProvider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,9 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
-      <body className={inter.className}>
-        <ReCaptchaProviderWrapper>{children}</ReCaptchaProviderWrapper>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

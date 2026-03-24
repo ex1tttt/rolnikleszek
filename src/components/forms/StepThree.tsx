@@ -3,7 +3,14 @@
 import { useFormContext } from 'react-hook-form'
 
 export default function StepThree() {
-  const { register, formState: { errors } } = useFormContext()
+  const { register, formState: { errors }, setValue } = useFormContext()
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Оставляем только цифры
+    const onlyNumbers = e.target.value.replace(/\D/g, '')
+    e.target.value = onlyNumbers
+    setValue('phone', onlyNumbers, { shouldValidate: true })
+  }
 
   return (
     <div className="space-y-6">
@@ -38,8 +45,10 @@ export default function StepThree() {
           <input
             type="tel"
             id="phone"
-            placeholder="607 80 80 89"
+            placeholder="607808089"
+            inputMode="numeric"
             {...register('phone')}
+            onChange={handlePhoneChange}
             className="w-full px-4 py-3 border-2 border-[#d4c4b8] rounded-lg focus:ring-2 focus:ring-[#2d5016] focus:border-[#2d5016] focus:outline-none transition text-[#2c2c2c]"
           />
           {errors.phone && typeof errors.phone === 'object' && (

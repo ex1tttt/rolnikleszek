@@ -5,6 +5,35 @@ import {
   sendAdminNotificationEmail,
 } from '@/lib/email'
 
+// Verify reCAPTCHA token
+async function verifyRecaptchaToken(token: string): Promise<boolean> {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY
+
+  if (!secretKey) {
+    console.warn('RECAPTCHA_SECRET_KEY not configured')
+    return true // Allow if not configured
+  }
+
+  if (!token) {
+    return false
+  }
+
+  try {
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secretKey}&response=${token}`,
+    })
+
+    const data = await response.json()
+    // Consider score > 0.5 as valid (v3 returns score from 0 to 1)
+    return data.success && data.score > 0.5
+  } catch (error) {
+    console.error('Error verifying reCAPTCHA:', error)
+    return false
+  }
+}
+
 // POST /api/orders - Utwórz nowe zamówienie
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +49,17 @@ export async function POST(request: NextRequest) {
       notes,
       eggs_quantity,
       rodo_accepted,
+      recaptchaToken,
     } = body
+
+    // Verify reCAPTCHA token
+    const isValidCaptcha = await verifyRecaptchaToken(recaptchaToken)
+    if (!isValidCaptcha) {
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed' },
+        { status: 400 }
+      )
+    }
 
     // Validate required fields
     if (

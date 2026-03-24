@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { DeliverySlot, OrderFormData } from '@/types'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -24,6 +25,7 @@ const orderSchema = z.object({
   rodo_accepted: z.boolean().refine((val) => val === true, {
     message: 'Musisz zaakceptować warunki RODO',
   }),
+  recaptchaToken: z.string().optional(),
 })
 
 type OrderFormSchema = z.infer<typeof orderSchema>
@@ -33,6 +35,7 @@ interface OrderFormProps {
 }
 
 export default function OrderForm({ deliverySlots }: OrderFormProps) {
+  const { executeRecaptcha } = useGoogleReCaptcha()
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -84,10 +87,16 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
     setSubmitError(null)
 
     try {
+      // Get reCAPTCHA token
+      let recaptchaToken = ''
+      if (executeRecaptcha) {
+        recaptchaToken = await executeRecaptcha('submit_order')
+      }
+
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, recaptchaToken }),
       })
 
       if (!response.ok) {

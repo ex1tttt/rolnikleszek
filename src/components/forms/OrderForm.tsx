@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import { useSafeRecaptcha } from '@/lib/useSafeRecaptcha'
 import { DeliverySlot, OrderFormData } from '@/types'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -35,7 +35,7 @@ interface OrderFormProps {
 }
 
 export default function OrderForm({ deliverySlots }: OrderFormProps) {
-  const { executeRecaptcha } = useGoogleReCaptcha()
+  const { executeRecaptcha } = useSafeRecaptcha()
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)

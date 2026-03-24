@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import OrderForm from '@/components/forms/OrderForm'
+import Logo from '@/components/Logo'
 
 export default async function Home() {
   const supabase = await createServerSupabaseClient()
@@ -23,13 +24,7 @@ export default async function Home() {
       {/* Header */}
       <header className="bg-white border-b border-[#d4c4b8] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="text-5xl">🌾</div>
-            <div>
-              <h1 className="text-3xl font-bold text-[#2d5016]">Rolnik Leszek</h1>
-              <p className="text-xs text-[#8b6f47] font-medium">NATURALNE PRODUKTY OD GOSPODARSTWA</p>
-            </div>
-          </div>
+          <Logo />
           <div className="hidden sm:flex items-center gap-6">
             <a href="tel:607808089" className="text-[#2d5016] font-semibold hover:text-[#8b6f47]">📞 607 80 80 89</a>
           </div>
@@ -216,7 +211,7 @@ export default async function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
               <p className="font-semibold text-lg">Rolnik Leszek</p>
-              <p className="text-sm">Naturalne produkty prosto z gospodarstwa © 2024</p>
+              <p className="text-sm">Naturalne produkty prosto z gospodarstwa © 2026</p>
             </div>
             <p className="text-sm text-center md:text-right">
               Zaufane przez rodziny, wspierane przez naturę

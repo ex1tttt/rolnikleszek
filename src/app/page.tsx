@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
-import OrderFormWrapper from '@/components/forms/OrderFormWrapper'
+import OrderForm from '@/components/forms/OrderForm'
 import Logo from '@/components/Logo'
 
 export default async function Home() {
@@ -153,7 +153,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="bg-white rounded-3xl p-12 border-2 border-[#d4c4b8] shadow-xl">
-              <OrderFormWrapper deliverySlots={availableSlots} />
+              <OrderForm deliverySlots={availableSlots} />
             </div>
           </div>
         </section>

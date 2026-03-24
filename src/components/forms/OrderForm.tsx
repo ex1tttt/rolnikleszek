@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { useSafeRecaptcha } from '@/lib/useSafeRecaptcha'
 import { DeliverySlot, OrderFormData } from '@/types'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -35,11 +34,23 @@ interface OrderFormProps {
 }
 
 export default function OrderForm({ deliverySlots }: OrderFormProps) {
-  const { executeRecaptcha } = useSafeRecaptcha()
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+
+  // Load reCAPTCHA script dynamically
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://www.google.com/recaptcha/api.js'
+    script.async = true
+    script.defer = true
+    document.head.appendChild(script)
+
+    return () => {
+      document.head.removeChild(script)
+    }
+  }, [])
 
   const methods = useForm<OrderFormSchema>({
     resolver: zodResolver(orderSchema),
@@ -89,8 +100,14 @@ export default function OrderForm({ deliverySlots }: OrderFormProps) {
     try {
       // Get reCAPTCHA token
       let recaptchaToken = ''
-      if (executeRecaptcha) {
-        recaptchaToken = await executeRecaptcha('submit_order')
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+      
+      if (siteKey && (window as any).grecaptcha) {
+        try {
+          recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: 'submit_order' })
+        } catch (error) {
+          console.warn('reCAPTCHA execution failed:', error)
+        }
       }
 
       const response = await fetch('/api/orders', {
